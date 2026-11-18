@@ -51,7 +51,14 @@ const steps = [
       </div>
 
       <div class="demo" aria-label="Example of Ture Aid filing an email" role="img">
-        <div class="demo-bar"><span></span><span></span><span></span><b>Ture Aid</b></div>
+        <div class="demo-bar">
+          <b>Ture Aid</b>
+          <div class="demo-win" aria-hidden="true">
+            <span class="min"></span>
+            <span class="max"></span>
+            <span class="close"></span>
+          </div>
+        </div>
         <div class="demo-body">
           <div class="demo-side">
             <Logo size={24} fg="#ffffff" accent="var(--aqua-soft)" />
@@ -179,9 +186,15 @@ const steps = [
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
   .demo { background: var(--white); color: var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45); font-size: 0.92rem; }
-  .demo-bar { display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; background: #f1efea; border-bottom: 1px solid var(--line); }
-  .demo-bar span { width: 10px; height: 10px; border-radius: 50%; background: #d3d0c8; }
-  .demo-bar b { margin-left: 8px; font-weight: 550; color: var(--ink-2); font-size: 0.85rem; }
+  .demo-bar { display: flex; align-items: center; height: 30px; padding: 0 0 0 12px; background: #f1efea; border-bottom: 1px solid var(--line); }
+  .demo-bar b { font-weight: 550; color: var(--ink-2); font-size: 0.8rem; }
+  /* Windows title-bar controls (min / max / close), not macOS traffic lights */
+  .demo-win { display: flex; height: 100%; margin-left: auto; color: var(--ink-2); }
+  .demo-win span { width: 40px; height: 100%; display: grid; place-items: center; }
+  .demo-win .min::before { content: ''; width: 8px; border-top: 1px solid currentColor; }
+  .demo-win .max::before { content: ''; width: 8px; height: 8px; border: 1px solid currentColor; box-sizing: border-box; }
+  .demo-win .close::before { content: '×'; font-size: 15px; line-height: 1; font-weight: 300; }
+  .demo-win .close { color: var(--ink); }
   .demo-body { display: flex; min-height: 330px; }
   .demo-side { width: 132px; flex: none; background: var(--ink); padding: 18px 12px; display: flex; flex-direction: column; gap: 4px; }
   .demo-side :global(svg) { margin: 0 0 14px 6px; }
