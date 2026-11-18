@@ -1,0 +1,40 @@
+---
+// Ture Aid mark: an A whose T-bar unfurls as a fern frond, curling up on the right and down on the left.
+// fg = strokes, accent = the A's crossbar.
+interface Props {
+  size?: number;
+  fg?: string;
+  accent?: string;
+  label?: string;
+}
+const {
+  size = 40,
+  fg = 'var(--ink)',
+  accent = 'var(--deep)',
+  label = 'Ture Aid',
+} = Astro.props;
+---
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 100 100"
+  role="img"
+  aria-label={label}
+  class="logo-mark"
+>
+  <path
+    d="M24 49 A4.5 4.5 0 0 1 24 58 A8 8 0 0 1 24 42 H70 A16 16 0 0 0 70 10 A11 11 0 0 0 70 32 A6 6 0 0 0 70 20"
+    fill="none"
+    stroke={fg}
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  ></path>
+  <path d="M28 90 L46 42" fill="none" stroke={fg} stroke-width="8" stroke-linecap="round"></path>
+  <path d="M72 90 L54 42" fill="none" stroke={fg} stroke-width="8" stroke-linecap="round"></path>
+  <line x1="38" y1="70" x2="62" y2="70" stroke={accent} stroke-width="8" stroke-linecap="round"></line>
+</svg>
+
+<style>
+  .logo-mark { flex: none; display: block; }
+</style>

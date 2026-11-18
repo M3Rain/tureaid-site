@@ -1,0 +1,234 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import { SITE, url } from '../site';
+
+const features = [
+  {
+    title: 'Files email into matters',
+    body: 'Reads your mailbox and puts each message and attachment into the right matter folder, so the brief builds itself.',
+    icon: '<path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/>',
+  },
+  {
+    title: 'Maps people and events',
+    body: 'Draws a relationship map for each client, linking the people involved to the events of the case. It fills in automatically as new material arrives.',
+    icon: '<circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7 7l3.8 9M17 7l-3.8 9M7.2 6h9.6"/>',
+  },
+  {
+    title: 'Gathers facts for your drafts',
+    body: 'Tell it which document you’re drafting and it brings together the relevant facts, each with its source. It never drafts the document itself.',
+    icon: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+  },
+  {
+    title: 'Reviews the case against the elements',
+    body: 'Case review sets the facts of a matter against the conditions an offence requires. The legal judgement stays with you.',
+    icon: '<path d="M4 6h10M4 12h10M4 18h10"/><path d="M17 5.5l1.5 1.5L21 4.5M17 11.5l1.5 1.5L21 10.5"/><circle cx="19" cy="18" r="1.6"/>',
+  },
+];
+
+const steps = [
+  { n: '01', title: 'Join the waitlist', body: 'Tell us who you are and how you practise. It takes under a minute.' },
+  { n: '02', title: 'We get in touch', body: 'We open places in small groups so every barrister gets proper support.' },
+  { n: '03', title: 'Try it on sample data', body: 'The beta ships with an invented mailbox, so you can see it work before touching real files.' },
+  { n: '04', title: 'Help shape it', body: 'Early users tell us what to build next. Your feedback goes straight into the product.' },
+];
+---
+<Base overlay>
+  <section class="hero photo-band">
+    <img class="bg" src={url('/images/library.webp')} alt="" fetchpriority="high" />
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+    
+        <h1>Your personal assistant for every case <em>all on your own machine.</em></h1>
+        <p class="lead">
+          Ture Aid files email into matters, reads scans and photos locally, help maps details with
+          and relationship between events and provides elements for each case with their sources.
+        </p>
+        <div class="ctas">
+          <a class="btn btn-pop" href={url('/waitlist')}>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href={url('/how-it-works')}>How it works</a>
+        </div>
+      </div>
+
+      <div class="demo" aria-label="Example of Ture Aid filing an email" role="img">
+        <div class="demo-bar"><span></span><span></span><span></span><b>Ture Aid</b></div>
+        <div class="demo-body">
+          <div class="demo-side">
+            <Logo size={24} fg="#ffffff" accent="var(--aqua-soft)" />
+            <i class="on">Matters</i><i>Inbox</i><i>Dates</i><i>Scans</i>
+          </div>
+          <div class="demo-main">
+            <p class="demo-title">R v <span class="chip">[CLIENT 1]</span></p>
+            <div class="demo-card">
+              <p class="eyebrow">Filed to this matter</p>
+              <p class="strong">Re: disclosure for <span class="chip">[CLIENT 1]</span></p>
+              <p class="small">From <span class="chip">[PROSECUTOR 1]</span> · 2 attachments read locally</p>
+            </div>
+            <div class="demo-card">
+              <p class="eyebrow">Proposed date</p>
+              <p class="strong">Disclosure due · [DATE]</p>
+              <p class="small">Source: minute of <span class="chip">[JUDGE 1]</span>, para [N]</p>
+              <div class="demo-actions"><em class="pop">Add to calendar</em><em>Open source</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div class="split-copy">
+        <div class="section-head">
+          <h2>All the tedious work, done before you open the file.</h2>
+          <p class="lead">Disclosure arrives in every format and at every hour. Ture Aid does the sorting, so your time goes on the case.</p>
+        </div>
+        <ul class="features">
+          {features.map((f) => (
+            <li>
+              <div class="icon-dot">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={f.icon}></svg>
+              </div>
+              <div>
+                <h3>{f.title}</h3>
+                <p class="muted">{f.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <figure class="photo tall muted-photo fill">
+        <img src={url('/images/papers.webp')} alt="A thick stack of paper files marked with coloured tabs" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="never photo-band">
+    <img class="bg" src={url('/images/bookcase.webp')} alt="" loading="lazy" />
+    <div class="wrap never-grid">
+      <h2>It helps <em>you write</em></h2>
+      <div class="never-copy">
+        <p>
+          Submissions, advice and correspondence stay yours. Ture Aid sorts, reads, anonymises and points to the
+          passages that matter. Every date it proposes shows its source, so you can check it in a click.
+        </p>
+        <a class="btn btn-ghost" href={url('/how-it-works')}>See what it does and doesn’t do <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split reverse">
+      <figure class="photo tall">
+        <img src={url('/images/treeferns.webp')} alt="Native New Zealand bush with tree ferns" loading="lazy" />
+        <figcaption>Aotearoa</figcaption>
+      </figure>
+      <div class="split-copy">
+        <div class="section-head">
+          <p class="eyebrow">Private by design</p>
+          <h2>Your clients’ files stay on your computer.</h2>
+        </div>
+        <dl class="private">
+          <div>
+            <dt>Processed locally</dt>
+            <dd>Reading, text recognition, redaction and date-finding all run on your Windows machine. The text recognition models are built into the app.</dd>
+          </div>
+          <div>
+            <dt>Encrypted state</dt>
+            <dd>What Ture Aid keeps about your matters is stored encrypted on the device.</dd>
+          </div>
+          <div>
+            <dt>Only redacted text reaches the AI</dt>
+            <dd>Names and identifying details are replaced with placeholders on your computer first. The AI backend only ever receives the redacted version.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section access">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Early access</p>
+        <h2>We’re letting barristers in a few at a time.</h2>
+        <p class="lead">Ture Aid is in private beta on Windows. Join the waitlist and we’ll be in touch when a place opens.</p>
+      </div>
+      <ol class="steps">
+        {steps.map((s) => (
+          <li>
+            <span class="num">{s.n}</span>
+            <h3>{s.title}</h3>
+            <p class="muted">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="ctas" style="margin-top: 48px">
+        <a class="btn btn-ink" href={url('/waitlist')}>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-line" href={url('/contact')}>Ask a question</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: clamp(150px, 16vw, 200px) 0 clamp(80px, 10vw, 128px); min-height: min(100vh, 900px); display: flex; align-items: center; }
+  .hero-grid { display: grid; gap: 64px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); align-items: center; }
+  .hero-copy { display: flex; flex-direction: column; gap: 28px; }
+  .hero h1 { color: var(--white); }
+  .hero h1 em { color: var(--aqua-soft); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .demo { background: var(--white); color: var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45); font-size: 0.92rem; }
+  .demo-bar { display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; background: #f1efea; border-bottom: 1px solid var(--line); }
+  .demo-bar span { width: 10px; height: 10px; border-radius: 50%; background: #d3d0c8; }
+  .demo-bar b { margin-left: 8px; font-weight: 550; color: var(--ink-2); font-size: 0.85rem; }
+  .demo-body { display: flex; min-height: 330px; }
+  .demo-side { width: 132px; flex: none; background: var(--ink); padding: 18px 12px; display: flex; flex-direction: column; gap: 4px; }
+  .demo-side :global(svg) { margin: 0 0 14px 6px; }
+  .demo-side i { font-style: normal; color: #c9d6d9; padding: 7px 10px; border-radius: 6px; font-size: 0.85rem; }
+  .demo-side i.on { background: rgba(61, 214, 195, 0.16); color: var(--aqua); font-weight: 600; }
+  .demo-main { flex: 1; min-width: 0; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .demo-title { font-family: var(--serif); font-size: 1.35rem; letter-spacing: -0.01em; }
+  .demo-card { border-radius: 8px; padding: 12px 14px; box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; gap: 4px; }
+  .demo-card .eyebrow { font-size: 0.64rem; color: var(--muted); }
+  .strong { font-weight: 600; }
+  .small { font-size: 0.82rem; color: var(--ink-2); }
+  .demo-actions { display: flex; gap: 8px; margin-top: 6px; }
+  .demo-actions em { font-style: normal; font-weight: 600; font-size: 0.8rem; padding: 6px 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px #cfcbc2; }
+  .demo-actions em.pop { background: var(--aqua); box-shadow: none; }
+  @media (max-width: 520px) { .demo-side { display: none; } }
+
+  .muted { color: var(--ink-2); }
+
+  .split { display: grid; gap: clamp(40px, 6vw, 88px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); align-items: center; }
+  .split-copy .section-head { margin-bottom: 40px; }
+  .photo.tall { aspect-ratio: 4 / 5; margin: 0; }
+  .photo.muted-photo img { filter: saturate(0.3) contrast(1.05); }
+  /* Photo beside a long list: span the full column height on wide screens */
+  @media (min-width: 961px) { .photo.fill { align-self: stretch; aspect-ratio: auto; } }
+  @media (max-width: 960px) { .split.reverse .photo { order: 2; } .photo.tall { aspect-ratio: 4 / 3; } }
+
+  .features { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .features li { display: grid; grid-template-columns: 44px 1fr; gap: 20px; padding: 22px 0; border-top: 1px solid var(--line); }
+  .features li:last-child { border-bottom: 1px solid var(--line); }
+  .features .icon-dot { margin: 0; }
+  .features h3 { margin-bottom: 4px; }
+
+  .never { padding: clamp(96px, 12vw, 160px) 0; }
+  .never::before { background: linear-gradient(90deg, rgba(8, 22, 30, 0.9), rgba(8, 22, 30, 0.6)); }
+  .never-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); align-items: center; }
+  .never h2 { font-size: clamp(2.6rem, 5.2vw, 4.4rem); color: var(--white); }
+  .never h2 em { color: var(--aqua-soft); }
+  .never-copy { display: flex; flex-direction: column; gap: 28px; align-items: flex-start; color: #d3e1e4; font-size: 1.15rem; }
+
+  .private { margin: 0; display: flex; flex-direction: column; }
+  .private div { padding: 22px 0; border-top: 1px solid var(--line); }
+  .private div:last-child { border-bottom: 1px solid var(--line); }
+  .private dt { font-weight: 600; margin-bottom: 4px; }
+  .private dd { margin: 0; color: var(--ink-2); }
+
+  .access { background: var(--white); border-top: 1px solid var(--line); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .steps li { display: flex; flex-direction: column; gap: 10px; padding-top: 22px; border-top: 2px solid var(--ink); }
+  .num { font-family: var(--serif); font-size: 1.6rem; color: var(--deep); line-height: 1; }
+</style>

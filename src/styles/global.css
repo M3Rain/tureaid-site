@@ -1,0 +1,209 @@
+@import '@fontsource-variable/inter-tight';
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+
+:root {
+  /* Palette A, used as accents over photography and warm neutrals */
+  --aqua: #3dd6c3;       /* accent */
+  --aqua-soft: #a0d9d2;  /* soft tint, the favicon crossbar */
+  --aqua-wash: #eaf4f2;
+  --deep: #00606b;       /* petrol */
+  --pop: #ff5a3d;        /* coral spark: focus rings only */
+  --ink: #0b1f2a;
+  --ink-2: #33444d;
+  --muted: #5b6a70;
+  --line: #e2dfd8;
+  --paper: #f6f4ef;      /* warm off-white */
+  --stone: #ebe7df;
+  --white: #ffffff;
+
+  --font: 'Inter Tight Variable', 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Newsreader Variable', 'Newsreader', Georgia, 'Times New Roman', serif;
+  --mono: ui-monospace, 'Cascadia Code', Consolas, Menlo, monospace;
+  --radius: 4px;
+  --wrap: 1200px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+h1, h2, h3 { margin: 0; }
+h1, h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+h1 { font-size: clamp(2.6rem, 5.6vw, 4.8rem); }
+h2 { font-size: clamp(2rem, 3.8vw, 3.1rem); }
+h1 em, h2 em { font-style: italic; color: inherit; }
+h3 { font-size: 1.15rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+p { margin: 0; }
+
+a { color: var(--deep); text-underline-offset: 3px; }
+a:hover { color: var(--ink); }
+
+:focus-visible { outline: 3px solid var(--pop); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+
+.eyebrow {
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--deep);
+}
+.eyebrow.light { color: var(--aqua-soft); }
+
+.lead { font-size: clamp(1.1rem, 1.5vw, 1.25rem); color: var(--ink-2); max-width: 38em; line-height: 1.6; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn .arrow { transition: transform 0.2s ease; }
+.btn:hover .arrow { transform: translateX(3px); }
+/* Primary: aqua, reads on both photos and paper */
+.btn-pop { background: var(--aqua); color: var(--ink); }
+.btn-pop:hover { background: #63e0d0; color: var(--ink); }
+.btn-ink { background: var(--ink); color: var(--white); }
+.btn-ink:hover { background: var(--deep); color: var(--white); }
+.btn-line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(11, 31, 42, 0.35); }
+.btn-line:hover { box-shadow: inset 0 0 0 1px var(--ink); color: var(--ink); }
+.btn-ghost { background: transparent; color: var(--white); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 1px var(--white); color: var(--white); }
+
+.chip {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--deep);
+  background: var(--aqua-wash);
+  border-radius: 4px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.section { padding: clamp(72px, 10vw, 128px) 0; }
+.section-head { display: flex; flex-direction: column; gap: 18px; margin-bottom: 56px; max-width: 44em; }
+
+.grid { display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); background: var(--line); border: 1px solid var(--line); }
+
+.card {
+  background: var(--white);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.icon-dot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--aqua-wash);
+  display: grid;
+  place-items: center;
+  color: var(--deep);
+  margin-bottom: 8px;
+}
+
+/* Full-bleed photograph with a dark scrim, used for heroes and feature bands */
+.photo-band { position: relative; isolation: isolate; color: var(--white); overflow: hidden; background: var(--ink); }
+.photo-band > img.bg {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;
+}
+.photo-band::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(100deg, rgba(8, 22, 30, 0.92) 0%, rgba(8, 22, 30, 0.72) 48%, rgba(8, 22, 30, 0.35) 100%);
+}
+.photo-band .lead { color: #d9e4e6; }
+
+/* Framed photo inside a light section */
+.photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--stone);
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+.photo figcaption {
+  position: absolute; left: 16px; bottom: 14px;
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.85);
+}
+
+pre {
+  margin: 0;
+  background: var(--ink);
+  color: #dff5f2;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+code { font-family: var(--mono); font-size: 0.92em; }
+:not(pre) > code { background: var(--aqua-wash); color: var(--deep); padding: 1px 6px; border-radius: 4px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Motion ---------- */
+:root { --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+/* Scroll reveal (classes added by the script in Base.astro) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.js .reveal.in { opacity: 1; transform: none; }
+/* Photos also settle from a slight zoom */
+.js .photo.reveal img { transform: scale(1.08); transition: transform 1.6s var(--ease-out); transition-delay: var(--d, 0ms); }
+.js .photo.reveal.in img { transform: none; }
+
+/* Hero: background eases out of a slow zoom, content rises in line by line */
+@keyframes hero-zoom { from { transform: scale(1.08); } to { transform: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.hero > img.bg, .page-hero > img.bg { animation: hero-zoom 2.6s var(--ease-out) both; }
+.hero-copy > *, .page-hero .inner > *, .hero .demo { animation: rise 0.9s var(--ease-out) both; }
+.hero-copy > :nth-child(1), .page-hero .inner > :nth-child(1) { animation-delay: 0.1s; }
+.hero-copy > :nth-child(2), .page-hero .inner > :nth-child(2) { animation-delay: 0.2s; }
+.hero-copy > :nth-child(3), .page-hero .inner > :nth-child(3) { animation-delay: 0.32s; }
+.hero-copy > :nth-child(4), .page-hero .inner > :nth-child(4) { animation-delay: 0.44s; }
+.hero .demo { animation-duration: 1.1s; animation-delay: 0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  .js .reveal, .js .photo.reveal img { opacity: 1; transform: none; }
+}

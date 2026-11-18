@@ -1,0 +1,215 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { url } from '../site';
+
+const pipeline = [
+  {
+    k: 'Intake',
+    title: 'Mail comes in',
+    body: 'Ture Aid checks your mailbox: Microsoft 365 or the new Outlook after you sign in with Microsoft, or the bundled sample mailbox in the beta.',
+  },
+  {
+    k: 'Read',
+    title: 'Every attachment is read on your computer',
+    body: 'PDFs, scans and photos go through text recognition on the device. It is tuned for real disclosure: it evens out poor lighting, splits words that scanning glued together and recovers lines that would otherwise be lost.',
+  },
+  {
+    k: 'File',
+    title: 'Matched and filed to the right matter',
+    body: 'Each message is matched to a matter and filed into its folder. Disclosure is tracked in a disclosure log as it arrives.',
+  },
+  {
+    k: 'Dates',
+    title: 'Dates proposed, with sources',
+    body: 'Deadlines and hearing dates are picked out and shown next to the passage they came from. Nothing reaches your calendar until you accept it.',
+  },
+  {
+    k: 'Map',
+    title: 'A relationship map builds itself',
+    body: 'For each client, Ture Aid draws a map of the people involved and the events that connect them. It grows as the case progresses, adding new parties and events as fresh material is filed.',
+  },
+  {
+    k: 'Protect',
+    title: 'Identifying details are removed before the AI sees anything',
+    body: 'Names and other identifying details are swapped for placeholders like [CLIENT 1] and [WITNESS 2] on your computer. Only this redacted version is ever passed to the AI backend.',
+  },
+  {
+    k: 'Draft',
+    title: 'Facts gathered for the document you name',
+    body: 'Tell Ture Aid which document you are drafting and it brings together the relevant facts from the matter, each linked to its source. It does not draft the document.',
+  },
+  {
+    k: 'Review',
+    title: 'Facts set against the elements',
+    body: 'Case review matches the facts of the matter to the conditions an offence requires, showing what the material supports and what is missing. It does not say which offence that is.',
+  },
+  {
+    k: 'You',
+    title: 'You write and decide',
+    body: 'The submissions, the advice and every judgement call stay with you. Ture Aid prepares the ground and shows its sources.',
+  },
+];
+
+const does = [
+  'Files email and attachments into matters',
+  'Reads scans, photos and PDFs locally',
+  'Proposes dates and shows where each came from',
+  'Maps the people and events around each client as the case progresses',
+  'Gathers the relevant facts for the document you are drafting',
+  'Matches the facts of a case to the conditions of an offence',
+  'Keeps a disclosure log per matter',
+  'Searches across your matters',
+];
+const doesnt = [
+  'Write submissions, advice or any legal text',
+  'Draft the document for you',
+  'Tell you which offence the facts amount to',
+  'Pass identifying details to the AI backend',
+  'Put dates in your calendar without you',
+];
+
+const faqs = [
+  {
+    q: 'Does my client material leave my computer?',
+    a: 'Your files are read, filed and searched on your own machine. When a feature uses the AI backend, names and other identifying details are replaced with placeholders first, and only that redacted version is sent.',
+  },
+  {
+    q: 'Will it write my submissions or advice?',
+    a: 'No. Ture Aid never writes legal text. For drafting, it gathers the relevant facts for the document you name, each with its source, and the writing stays with you.',
+  },
+  {
+    q: 'Will it tell me which offence the facts amount to?',
+    a: 'No. Case review sets the facts of a matter against the conditions an offence requires, so you can see what the material supports and what is missing. It does not name the offence or reach a conclusion.',
+  },
+  {
+    q: 'How do I know where something came from?',
+    a: 'Every date, fact and connection on the relationship map links back to the passage it came from, so you can check it in a click.',
+  },
+  {
+    q: 'What do I need to run it?',
+    a: 'A Windows computer. To connect your mail, you need Microsoft 365 or the new Outlook. The beta also ships with an invented sample mailbox, so you can try it without real files.',
+  },
+  {
+    q: 'How do I get access?',
+    a: 'Ture Aid is in private beta. Join the waitlist and we will be in touch when a place opens.',
+  },
+];
+---
+<Base overlay title="How it works" description="How Ture Aid files email, reads scans locally, proposes dates, maps people and events, gathers facts for drafting and reviews a case against the elements, and what it never does.">
+  <PageHero image={url('/images/desk.webp')} eyebrow="Ture Aid explained">
+    <h1>From inbox to organised matter, <em>without identifying details leaving your machine.</em></h1>
+    <p class="lead">Ture Aid takes on the clerical work around a criminal defence brief. Here is what happens to a message from the moment it arrives.</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="pipeline">
+        {pipeline.map((p, i) => (
+          <li>
+            <div class="rail"><span class="dot">{i + 1}</span></div>
+            <div class="step">
+              <p class="eyebrow tag">{p.k}</p>
+              <h2 class="h3">{p.title}</h2>
+              <p>{p.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap two">
+      <div class="card">
+        <h2 class="h3">Ture Aid does</h2>
+        <ul class="ticks">{does.map((d) => <li>{d}</li>)}</ul>
+      </div>
+      <div class="card dark">
+        <h2 class="h3">Ture Aid does not</h2>
+        <ul class="crosses">{doesnt.map((d) => <li>{d}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap faq-grid">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>What barristers ask us.</h2>
+        <p class="lead">Something not covered here? <a href={url('/contact')}>Get in touch</a>.</p>
+      </div>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta photo-band">
+    <img class="bg" src={url('/images/bookcase.webp')} alt="" loading="lazy" />
+    <div class="wrap cta-inner">
+      <h2>Spend your week on the case, <em>not the admin.</em></h2>
+      <p class="lead">We’re opening Ture Aid to New Zealand criminal defence barristers a few at a time.</p>
+      <div class="ctas">
+        <a class="btn btn-pop" href={url('/waitlist')}>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href={url('/contact')}>Ask a question</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .h3 { font-family: var(--serif); font-weight: 400; font-size: 1.75rem; letter-spacing: -0.01em; }
+
+  .pipeline { list-style: none; margin: 0; padding: 0; max-width: 820px; }
+  .pipeline li { display: grid; grid-template-columns: 56px 1fr; gap: 20px; }
+  .rail { position: relative; display: flex; justify-content: center; }
+  .rail::before { content: ''; position: absolute; top: 0; bottom: 0; width: 3px; background: var(--line); border-radius: 2px; }
+  .pipeline li:first-child .rail::before { top: 22px; }
+  .pipeline li:last-child .rail::before { bottom: auto; height: 22px; }
+  .dot { position: relative; width: 44px; height: 44px; border-radius: 50%; background: var(--paper); color: var(--deep); box-shadow: inset 0 0 0 1px var(--deep); display: grid; place-items: center; font-family: var(--serif); font-size: 1.15rem; }
+  .step { padding: 6px 0 40px; display: flex; flex-direction: column; gap: 8px; }
+  .step p:last-child { color: var(--ink-2); }
+  .tag { color: var(--deep); }
+
+  .alt { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .alt .card { border: 1px solid var(--line); }
+  .two { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+  .card.dark { background: var(--ink); color: var(--white); box-shadow: none; }
+  ul.ticks, ul.crosses { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  ul.ticks li, ul.crosses li { position: relative; padding-left: 34px; }
+  ul.ticks li::before { content: ''; position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--aqua); }
+  ul.ticks li::after { content: ''; position: absolute; left: 7px; top: 8px; width: 7px; height: 11px; border: solid var(--ink); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+  ul.crosses li::before, ul.crosses li::after { content: ''; position: absolute; left: 3px; top: 13px; width: 16px; height: 2.5px; background: var(--pop); border-radius: 2px; }
+  ul.crosses li::before { transform: rotate(45deg); }
+  ul.crosses li::after { transform: rotate(-45deg); }
+
+  .faq-grid { display: grid; gap: clamp(32px, 6vw, 88px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); align-items: start; }
+  .faq-grid .section-head { margin-bottom: 0; }
+  .faq { border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary {
+    list-style: none; cursor: pointer; position: relative;
+    padding: 22px 44px 22px 0; font-weight: 600; font-size: 1.05rem;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+'; position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+    font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: var(--deep); transition: transform 0.2s ease;
+  }
+  .faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  .faq summary:hover { color: var(--deep); }
+  .faq details p { padding: 0 44px 24px 0; color: var(--ink-2); }
+
+  .cta { padding: clamp(96px, 12vw, 150px) 0; }
+  .cta::before { background: linear-gradient(90deg, rgba(8, 22, 30, 0.92), rgba(8, 22, 30, 0.65)); }
+  .cta-inner { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .cta h2 { color: var(--white); max-width: 14em; font-size: clamp(2.4rem, 4.8vw, 3.8rem); }
+  .cta h2 em { color: var(--aqua-soft); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+</style>

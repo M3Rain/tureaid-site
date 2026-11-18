@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE, url } from '../site';
+---
+<Base overlay title="Join the waitlist" description="Ture Aid is in private beta. Join the waitlist for early access for your practice or chambers.">
+  <PageHero image={url('/images/busts.webp')} eyebrow={`${SITE.status} · Early access`}>
+    <h1>Join the waitlist for <em>early access.</em></h1>
+    <p class="lead">We’re opening Ture Aid to New Zealand criminal defence barristers a few at a time. Leave your details and we’ll be in touch when a place opens.</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap wl-grid">
+      <div class="aside">
+        <h2>What to expect</h2>
+        <ol class="expect">
+          <li><b>A short reply.</b> We’ll confirm we have your details and may ask one or two questions about how you work.</li>
+          <li><b>An invitation.</b> When a place opens, you’ll get access to the Windows beta and a quick walkthrough.</li>
+          <li><b>A say in what’s next.</b> Early users shape the roadmap. Tell us what eats your week.</li>
+        </ol>
+        <p class="note">No spam, and we never share your details. </p>
+      </div>
+
+      <form class="form" id="waitlist-form" novalidate>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="email">Work email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="chambers">Chambers or firm <span class="opt">(optional)</span></label>
+          <input id="chambers" name="chambers" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="role">I am a</label>
+          <select id="role" name="role">
+            <option>Barrister sole</option>
+            <option>Barrister in chambers</option>
+            <option>Lawyer at a firm</option>
+            <option>Public defence service</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="notes">What would help you most? <span class="opt">(optional)</span></label>
+          <textarea id="notes" name="notes" rows="4"></textarea>
+        </div>
+        <button class="btn btn-ink" type="submit">Join the waitlist <span class="arrow" aria-hidden="true">→</span></button>
+        <p class="status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ to: SITE.email, endpoint: SITE.waitlistEndpoint }}>
+  const form = document.getElementById('waitlist-form');
+  const status = document.getElementById('form-status');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    if (!name || !/^\S+@\S+\.\S+$/.test(email)) {
+      status.textContent = 'Please add your name and a valid email.';
+      return;
+    }
+    if (endpoint) {
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = 'You’re on the list. We’ll be in touch.';
+      } catch {
+        status.textContent = `Something went wrong. Please email ${to} instead.`;
+      }
+      return;
+    }
+    // No endpoint configured: open a pre-filled email instead.
+    const lines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Chambers or firm: ${String(data.get('chambers') || '').trim() || '-'}`,
+      `Role: ${data.get('role')}`,
+      '',
+      String(data.get('notes') || '').trim(),
+    ];
+    window.location.href = `mailto:${to}?subject=${encodeURIComponent('Ture Aid waitlist')}&body=${encodeURIComponent(lines.join('\n'))}`;
+    status.textContent = `Your email app should open now. If it doesn’t, write to ${to}.`;
+  });
+</script>
+
+<style>
+  .wl-grid { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); align-items: start; }
+  .aside { display: flex; flex-direction: column; gap: 28px; }
+  .aside h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+  .expect { margin: 0; padding: 0; list-style: none; counter-reset: x; display: flex; flex-direction: column; }
+  .expect li { counter-increment: x; position: relative; padding: 18px 0 18px 48px; border-top: 1px solid var(--line); color: var(--ink-2); }
+  .expect li:last-child { border-bottom: 1px solid var(--line); }
+  .expect li::before { content: counter(x, decimal-leading-zero); position: absolute; left: 0; top: 16px; font-family: var(--serif); font-size: 1.3rem; color: var(--deep); }
+  .expect b { color: var(--ink); font-weight: 600; }
+  .note { font-size: 0.92rem; color: var(--muted); }
+
+  .form { background: var(--white); padding: clamp(28px, 4vw, 44px); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 20px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label { font-weight: 600; font-size: 0.92rem; }
+  .opt { font-weight: 400; color: var(--muted); }
+  input, select, textarea {
+    font: inherit; color: var(--ink); background: var(--paper);
+    border: 1px solid #cfcbc2; border-radius: 4px; padding: 12px 14px; min-height: 50px; width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--deep); outline-offset: 1px; border-color: var(--deep); background: var(--white); }
+  textarea { resize: vertical; }
+  .form .btn { align-self: flex-start; }
+  .status { font-size: 0.95rem; color: var(--deep); font-weight: 600; min-height: 1.5em; }
+</style>

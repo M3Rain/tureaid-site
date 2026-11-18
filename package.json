@@ -1,0 +1,20 @@
+{
+  "name": "tureaid-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && npm run format:dist",
+    "preview": "astro preview",
+    "format:dist": "prettier --write --log-level warn \"dist/**/*.{html,css,js}\""
+  },
+  "dependencies": {
+    "@fontsource-variable/inter-tight": "^5.3.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "astro": "^7.4.12"
+  },
+  "devDependencies": {
+    "prettier": "^3.10.1"
+  }
+}

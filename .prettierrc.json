@@ -1,0 +1,8 @@
+{
+  "printWidth": 110,
+  "singleQuote": true,
+  "htmlWhitespaceSensitivity": "css",
+  "overrides": [
+    { "files": "dist/**/*.html", "options": { "printWidth": 100 } }
+  ]
+}

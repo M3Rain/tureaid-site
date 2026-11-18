@@ -1,0 +1,25 @@
+---
+// Full-bleed photo hero for inner pages. Use with <Base overlay> so the header sits over the photo.
+interface Props {
+  image: string;
+  eyebrow: string;
+  /** Focal point for object-position, e.g. 'center 30%'. */
+  focus?: string;
+}
+const { image, eyebrow, focus = 'center' } = Astro.props;
+---
+<section class="page-hero photo-band">
+  <img class="bg" src={image} alt="" fetchpriority="high" style={`object-position: ${focus}`} />
+  <div class="wrap inner">
+    <p class="eyebrow light">{eyebrow}</p>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-hero { padding: clamp(150px, 16vw, 210px) 0 clamp(72px, 9vw, 120px); }
+  .inner { display: flex; flex-direction: column; gap: 24px; }
+  .inner :global(h1) { color: var(--white); max-width: 16em; font-size: clamp(2.4rem, 5vw, 4.2rem); }
+  .inner :global(h1 em) { color: var(--aqua-soft); }
+  .inner :global(.lead) { color: #d9e4e6; }
+</style>

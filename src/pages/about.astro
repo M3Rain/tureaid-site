@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Logo from '../components/Logo.astro';
+import { url } from '../site';
+
+const principles = [
+  { title: 'On the device, first', body: 'Client material is privileged and sensitive. Reading, recognition and redaction happen on the barrister’s own computer.' },
+  { title: 'Never the author', body: 'Ture Aid never writes legal text. It prepares the ground; counsel does the thinking and the writing.' },
+  { title: 'Show the source', body: 'Anything it proposes, like a date, comes with where it was found, so it can be checked in seconds.' },
+  { title: 'Built around the barrister', body: 'Every feature starts from how defence counsel actually work. The lawyers who use Ture Aid shape what we build next.' },
+];
+
+const team = [
+  {
+    names: ['Ken Ruan'],
+    role: 'Legal lead',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  },
+  {
+    names: ['Daniel Chen', 'Harbour Wang'],
+    role: 'Technical leads',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  },
+  {
+    names: ['Zhen Fan'],
+    role: 'Security lead',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  },
+  {
+    names: ['Kenny Fu'],
+    role: 'Company and governance lead',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  },
+];
+---
+<Base overlay title="About us" description="Why Ture Aid exists, what the name means, the principles it is built on and the team behind it.">
+  <PageHero image={url('/images/treeferns.webp')} eyebrow="About us">
+    <h1>Built for the people who <em>stand beside the accused.</em></h1>
+    <p class="lead">
+      Criminal defence barristers in Aotearoa New Zealand carry heavy caseloads, and much of the week goes on
+      sorting email, reading scanned disclosure and tracking dates. Ture Aid exists to give that time back,
+      without client material ever leaving counsel’s computer.
+    </p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap name-grid">
+      <figure class="photo koru">
+        <img src={url('/images/koru.webp')} alt="A young fern frond unfurling" loading="lazy" />
+      </figure>
+      <div class="name-copy">
+        <p class="eyebrow">The name</p>
+
+        <dl class="entries">
+          <div class="entry">
+            <dt><span class="word">Ture</span> <span class="pos">noun · te reo Māori</span></dt>
+            <dd>Law.</dd>
+          </div>
+          <div class="entry">
+            <dt><span class="word">Aid</span> <span class="pos">noun</span></dt>
+            <dd>Support for the work, <em>never a replacement for the lawyer.</em></dd>
+          </div>
+        </dl>
+
+        <div class="mark-note">
+          <Logo size={52} fg="var(--ink)" accent="var(--deep)" label="" />
+          <p>The mark is an A whose top bar unfurls like a new fern frond: a sign of growth and a fresh start.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What we believe</p>
+        <h2>Four principles behind every feature.</h2>
+      </div>
+      <div class="grid">
+        {principles.map((p, i) => (
+          <article class="card">
+            <span class="num">0{i + 1}</span>
+            <h3>{p.title}</h3>
+            <p class="muted">{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap team">
+      <div class="section-head">
+        <p class="eyebrow">Who we are</p>
+        <h2>The team behind Ture Aid.</h2>
+        <p class="lead">Each part of the product has a named lead, so you always know who is responsible for what.</p>
+      </div>
+      <div class="people">
+        {team.map((t) => (
+          <article class="person">
+            <div class="avatars" aria-hidden="true">
+              {t.names.map((n) => <span>{n.split(' ').map((w) => w[0]).join('')}</span>)}
+            </div>
+            <h3 class="name">{t.names.join(' & ')}</h3>
+            <p class="eyebrow">{t.role}</p>
+            <p class="bio">{t.bio}</p>
+          </article>
+        ))}
+      </div>
+      <div class="ctas"><a class="btn btn-ink" href={url('/waitlist')}>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a><a class="btn btn-line" href={url('/contact')}>Get in touch</a></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .name-grid { display: grid; gap: clamp(40px, 6vw, 88px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); align-items: center; }
+  .koru { aspect-ratio: 4 / 5; margin: 0; }
+  .koru img { object-position: 40% center; }
+  @media (max-width: 900px) { .koru { aspect-ratio: 3 / 2; } }
+  .name-copy { display: flex; flex-direction: column; gap: 36px; }
+  .entries { margin: 0; display: flex; flex-direction: column; }
+  .entry { padding: 28px 0; border-top: 1px solid var(--line); }
+  .entry:last-child { border-bottom: 1px solid var(--line); }
+  .entry dt { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 10px; }
+  .word { font-family: var(--serif); font-size: clamp(3.2rem, 6vw, 4.8rem); line-height: 1; letter-spacing: -0.03em; color: var(--ink); }
+  .pos { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--muted); }
+  .entry dd { margin: 0; font-family: var(--serif); font-size: clamp(1.35rem, 2vw, 1.6rem); line-height: 1.4; color: var(--ink-2); }
+  .entry dd em { color: var(--deep); }
+  .mark-note { display: flex; align-items: center; gap: 20px; color: var(--ink-2); font-size: 1rem; max-width: 30em; }
+  .mark-note :global(svg) { flex: none; }
+
+  .alt { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .muted { color: var(--ink-2); }
+  .num { font-family: var(--serif); font-size: 1.6rem; line-height: 1; color: var(--deep); }
+
+  .team .section-head { margin-bottom: 40px; }
+  .people { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); margin-bottom: 48px; }
+  .person { background: var(--white); border: 1px solid var(--line); padding: 32px; display: flex; flex-direction: column; gap: 8px; }
+  .avatars { display: flex; gap: 8px; margin-bottom: 12px; }
+  .avatars span {
+    width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--ink); color: var(--aqua-soft); font-family: var(--serif); font-size: 1.25rem; letter-spacing: 0.02em;
+  }
+  .avatars span + span { background: var(--deep); color: var(--white); }
+  .name { font-family: var(--serif); font-weight: 400; font-size: 1.8rem; line-height: 1.15; letter-spacing: -0.01em; }
+  .bio { color: var(--ink-2); margin-top: 6px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+</style>

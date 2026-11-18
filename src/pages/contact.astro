@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE, url } from '../site';
+---
+<Base overlay title="Contact" description="Get in touch about Ture Aid, report a problem with the beta, or ask about using it in your practice.">
+  <PageHero image={url('/images/antique-desk.webp')} eyebrow="Contact">
+    <h1>Talk to us.</h1>
+    <p class="lead">Questions about the beta, a bug to report, or interested in trying Ture Aid in your practice? Get in touch.</p>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap contact-grid">
+      <div class="ways">
+        <article class="card">
+          <h2 class="h3">Email</h2>
+          <p class="muted">For anything at all, including early access for your chambers.</p>
+          <p><a class="big" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        </article>
+        <article class="card">
+          <h2 class="h3">Report a problem</h2>
+          <p class="muted">Found a bug in the beta? Please sent us an email with the bug details.</p>
+          <p><a href={SITE.issues}>Open an issue on GitHub</a></p>
+        </article>
+        <article class="card">
+          <h2 class="h3">Early access</h2>
+          <p class="muted">Ture Aid is in private beta. Join the waitlist and we’ll be in touch when a place opens.</p>
+          <p><a href={url('/waitlist')}>Join the waitlist</a></p>
+        </article>
+      </div>
+
+      <form class="card form" id="contact-form" novalidate>
+        <h2 class="h3">Send a message</h2>
+        <p class="muted small">This opens your email app with the message ready to send.</p>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="topic">About</label>
+          <select id="topic" name="topic">
+            <option>A question about Ture Aid</option>
+            <option>Trying it in my practice</option>
+            <option>A problem with the beta</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        <button class="btn btn-ink" type="submit">Write email <span class="arrow" aria-hidden="true">→</span></button>
+        <p class="status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ to: SITE.email }}>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const message = String(data.get('message') || '').trim();
+    if (!name || !email || !message) {
+      status.textContent = 'Please fill in your name, email and message.';
+      return;
+    }
+    const subject = `Ture Aid: ${data.get('topic')}`;
+    const body = `${message}\n\n${name}\n${email}`;
+    window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    status.textContent = `Your email app should open now. If it doesn’t, write to ${to}.`;
+  });
+</script>
+
+<style>
+  .h3 { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; letter-spacing: -0.01em; }
+  .muted { color: var(--ink-2); }
+  .small { font-size: 0.95rem; }
+  .big { font-size: 1.15rem; font-weight: 600; word-break: break-all; }
+
+  .contact-grid { display: grid; gap: clamp(32px, 5vw, 64px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); align-items: start; }
+  .ways { display: flex; flex-direction: column; }
+  .ways .card { background: transparent; padding: 26px 0; border-top: 1px solid var(--line); gap: 8px; }
+  .ways .card:last-child { border-bottom: 1px solid var(--line); }
+
+  .form { gap: 20px; border: 1px solid var(--line); padding: clamp(28px, 4vw, 44px); }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label { font-weight: 600; font-size: 0.92rem; }
+  input, select, textarea {
+    font: inherit; color: var(--ink); background: var(--paper);
+    border: 1px solid #cfcbc2; border-radius: 4px; padding: 12px 14px; min-height: 50px; width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--deep); outline-offset: 1px; border-color: var(--deep); background: var(--white); }
+  textarea { resize: vertical; }
+  .form .btn { align-self: flex-start; }
+  .status { font-size: 0.95rem; color: var(--deep); font-weight: 600; min-height: 1.5em; }
+</style>

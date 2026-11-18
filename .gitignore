@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# build output (GitHub Actions builds it)
+dist/
+
+# Astro generated types and cache
+.astro/
+
+# logs and OS files
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# environment
+.env
+.env.*
