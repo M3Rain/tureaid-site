@@ -147,7 +147,9 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 
   .bar { display: flex; align-items: center; gap: 24px; min-height: 76px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
   .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
-  .word { font-weight: 550; letter-spacing: 0.24em; font-size: 0.95rem; }
+  /* Mark sits low in its viewBox (A top ~ mid); nudge up so it shares the word’s horizontal axis. */
+  .brand :global(.logo-mark) { transform: translateY(-5px); }
+  .word { font-weight: 550; letter-spacing: 0.24em; font-size: 0.95rem; line-height: 1; }
   nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px; }
   .bar nav { margin-left: auto; }
   .bar nav a {
