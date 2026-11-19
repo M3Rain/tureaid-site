@@ -13,9 +13,24 @@ export const SITE = {
   // PLACEHOLDER: replace with your real contact address.
   email: 'hello@tureaid.example',
   status: 'Private beta',
-  // Waitlist form target. Leave empty to fall back to a pre-filled email to `email` above.
-  // To collect sign-ups without email, paste a form endpoint here, e.g. a Formspree URL
-  // like 'https://formspree.io/f/abcdwxyz'. It receives a POST with name, email, chambers, role, notes.
+  // Waitlist form target (used by src/pages/waitlist.astro).
+  //
+  // Empty (current): submitting opens the visitor's email app with a pre-filled message
+  // to `email` above. Nothing is stored by the site, but the visitor has to press send.
+  //
+  // Set: the form POSTs directly to this URL and shows "You're on the list" on success.
+  // Any service that accepts multipart form POSTs and returns 2xx works, e.g. a Formspree
+  // URL like 'https://formspree.io/f/abcdwxyz', or your own backend.
+  // Fields sent:
+  //   name        Your name (required)
+  //   email       Work email (required)
+  //   role        "Barrister sole" | "Barrister in chambers" | "Defence law firm" | "Other"
+  //   firm        Firm name, sent only when role is "Defence law firm"
+  //   role_other  Free text, sent only when role is "Other"
+  //   notes       What would help you most (optional)
+  //
+  // Before setting this: whichever service receives sign-ups holds personal information,
+  // so name it in the privacy note (see the TODO in waitlist.astro).
   waitlistEndpoint: '',
   platform: 'Windows only',
 };

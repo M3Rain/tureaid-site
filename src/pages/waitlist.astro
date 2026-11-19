@@ -18,6 +18,18 @@ import { SITE, url } from '../site';
           <li><b>An invitation.</b> When a place opens, you’ll get access to the Windows beta and a quick walkthrough.</li>
           <li><b>A say in what’s next.</b> Early users shape the roadmap. Tell us what eats your week.</li>
         </ol>
+        {/*
+          TODO before going live: privacy note (Privacy Act 2020, IPP 3).
+          "No spam, and we never share your details" is fine as a reassurance, but this
+          form (and any later questionnaire) collects personal information. IPP 3 expects
+          us to tell people, when we collect it:
+            - what it is for (contacting them about early access, shaping the product)
+            - who holds it (Ture Aid, plus any service set as SITE.waitlistEndpoint)
+            - that they can ask to see or correct it, and how to contact us
+          A short privacy note here, linking to a privacy page, would cover this. The same
+          page can explain how the product handles client data (see the privacy FAQs in
+          how-it-works.astro). Not required until the product goes live.
+        */}
         <p class="note">No spam, and we never share your details. </p>
       </div>
 
@@ -31,18 +43,21 @@ import { SITE, url } from '../site';
           <input id="email" name="email" type="email" autocomplete="email" required />
         </div>
         <div class="field">
-          <label for="chambers">Chambers or firm <span class="opt">(optional)</span></label>
-          <input id="chambers" name="chambers" autocomplete="organization" />
-        </div>
-        <div class="field">
-          <label for="role">I am a</label>
+          <label for="role">I am reaching out as</label>
           <select id="role" name="role">
             <option>Barrister sole</option>
             <option>Barrister in chambers</option>
-            <option>Lawyer at a firm</option>
-            <option>Public defence service</option>
+            <option>Defence law firm</option>
             <option>Other</option>
           </select>
+        </div>
+        <div class="field" id="firm-field" hidden>
+          <label for="firm">Firm name</label>
+          <input id="firm" name="firm" autocomplete="organization" disabled />
+        </div>
+        <div class="field" id="other-field" hidden>
+          <label for="role-other">Tell us a little about your role</label>
+          <input id="role-other" name="role_other" disabled />
         </div>
         <div class="field">
           <label for="notes">What would help you most? <span class="opt">(optional)</span></label>
@@ -58,6 +73,23 @@ import { SITE, url } from '../site';
 <script define:vars={{ to: SITE.email, endpoint: SITE.waitlistEndpoint }}>
   const form = document.getElementById('waitlist-form');
   const status = document.getElementById('form-status');
+  const role = document.getElementById('role');
+  // Show a follow-up field only for the options that need one. Hidden fields are
+  // disabled so they are not submitted.
+  const extras = [
+    [document.getElementById('firm-field'), 'Defence law firm'],
+    [document.getElementById('other-field'), 'Other'],
+  ];
+  const syncRole = () => {
+    for (const [field, value] of extras) {
+      const show = role.value === value;
+      field.hidden = !show;
+      field.querySelector('input').disabled = !show;
+    }
+  };
+  role.addEventListener('change', syncRole);
+  form.addEventListener('reset', () => setTimeout(syncRole));
+  syncRole();
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = new FormData(form);
@@ -83,8 +115,9 @@ import { SITE, url } from '../site';
     const lines = [
       `Name: ${name}`,
       `Email: ${email}`,
-      `Chambers or firm: ${String(data.get('chambers') || '').trim() || '-'}`,
-      `Role: ${data.get('role')}`,
+      `Reaching out as: ${data.get('role')}`,
+      ...(data.has('firm') ? [`Firm: ${String(data.get('firm')).trim() || '-'}`] : []),
+      ...(data.has('role_other') ? [`Role: ${String(data.get('role_other')).trim() || '-'}`] : []),
       '',
       String(data.get('notes') || '').trim(),
     ];
@@ -106,6 +139,7 @@ import { SITE, url } from '../site';
 
   .form { background: var(--white); padding: clamp(28px, 4vw, 44px); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 20px; }
   .field { display: flex; flex-direction: column; gap: 6px; }
+  .field[hidden] { display: none; }
   label { font-weight: 600; font-size: 0.92rem; }
   .opt { font-weight: 400; color: var(--muted); }
   input, select, textarea {

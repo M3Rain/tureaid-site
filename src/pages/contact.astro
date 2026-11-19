@@ -19,8 +19,8 @@ import { SITE, url } from '../site';
         </article>
         <article class="card">
           <h2 class="h3">Report a problem</h2>
-          <p class="muted">Found a bug in the beta? Please sent us an email with the bug details.</p>
-          <p><a href={SITE.issues}>Open an issue on GitHub</a></p>
+          <p class="muted">Found a bug in the beta? Email us with what happened and what you were doing. Please leave out any client details.</p>
+          <p><a href={`mailto:${SITE.email}?subject=${encodeURIComponent('Ture Aid beta: problem report')}`}>Email a problem report</a></p>
         </article>
         <article class="card">
           <h2 class="h3">Early access</h2>

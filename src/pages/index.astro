@@ -10,8 +10,8 @@ const features = [
     icon: '<path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/>',
   },
   {
-    title: 'Maps people and events',
-    body: 'Draws a relationship map for each client, linking the people involved to the events of the case. It fills in automatically as new material arrives.',
+    title: 'Case chronology',
+    body: 'Every document filed to the matter is logged and added to a visual chronology of the case, linking parties involved to what happened and when.',
     icon: '<circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7 7l3.8 9M17 7l-3.8 9M7.2 6h9.6"/>',
   },
   {
@@ -20,15 +20,15 @@ const features = [
     icon: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
   },
   {
-    title: 'Reviews the case against the elements',
-    body: 'Case review sets the facts of a matter against the conditions an offence requires. The legal judgement stays with you.',
+    title: 'Case review assistance',
+    body: 'Case review sets the facts of a matter against the legal elements. The judgement stays with you.',
     icon: '<path d="M4 6h10M4 12h10M4 18h10"/><path d="M17 5.5l1.5 1.5L21 4.5M17 11.5l1.5 1.5L21 10.5"/><circle cx="19" cy="18" r="1.6"/>',
   },
 ];
 
 const steps = [
   { n: '01', title: 'Join the waitlist', body: 'Tell us who you are and how you practise. It takes under a minute.' },
-  { n: '02', title: 'We get in touch', body: 'We open places in small groups so every barrister gets proper support.' },
+  { n: '02', title: 'We get in touch', body: 'When the next group starts, we’ll invite you and walk you through setting it up.' },
   { n: '03', title: 'Try it on sample data', body: 'The beta ships with an invented mailbox, so you can see it work before touching real files.' },
   { n: '04', title: 'Help shape it', body: 'Early users tell us what to build next. Your feedback goes straight into the product.' },
 ];
@@ -39,10 +39,10 @@ const steps = [
     <div class="wrap hero-grid">
       <div class="hero-copy">
     
-        <h1>Your personal assistant for every case <em>all on your own machine.</em></h1>
+        <h1>Your personal assistant for every case, <em>all on your own machine.</em></h1>
         <p class="lead">
-          Ture Aid files email into matters, reads scans and photos locally, help maps details with
-          and relationship between events and provides elements for each case with their sources.
+          Built for criminal defence barristers, Ture Aid approaches access to justice in Aotearoa New Zealand from the supply side: 
+          with technologies that help every barrister do their best work in less time.
         </p>
         <div class="ctas">
           <a class="btn btn-pop" href={url('/waitlist')}>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a>
@@ -116,8 +116,8 @@ const steps = [
       <h2>It helps <em>you write</em></h2>
       <div class="never-copy">
         <p>
-          Submissions, advice and correspondence stay yours. Ture Aid sorts, reads, anonymises and points to the
-          passages that matter. Every date it proposes shows its source, so you can check it in a click.
+          Submissions, advice and correspondence stay yours. Ture Aid sorts, reads, anonymises and recommends the relevant material for your review. 
+          Everything it recommends shows its source.
         </p>
         <a class="btn btn-ghost" href={url('/how-it-works')}>See what it does and doesn’t do <span class="arrow" aria-hidden="true">→</span></a>
       </div>
@@ -145,8 +145,8 @@ const steps = [
             <dd>What Ture Aid keeps about your matters is stored encrypted on the device.</dd>
           </div>
           <div>
-            <dt>Only redacted text reaches the AI</dt>
-            <dd>Names and identifying details are replaced with placeholders on your computer first. The AI backend only ever receives the redacted version.</dd>
+            <dt>Redacted before AI </dt>
+            <dd>Before a feature sends text to the AI backend, Ture Aid replaces names and other identifying details with placeholders on your computer. Your original files are not sent. <a href={url('/how-it-works#faq')}>Which provider we use, and what is retained</a>.</dd>
           </div>
         </dl>
       </div>
@@ -157,8 +157,8 @@ const steps = [
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Early access</p>
-        <h2>We’re letting barristers in a few at a time.</h2>
-        <p class="lead">Ture Aid is in private beta on Windows. Join the waitlist and we’ll be in touch when a place opens.</p>
+        <h2>We’re working with barristers in small groups.</h2>
+        <p class="lead">That way we can support each barrister properly and shape Ture Aid around how they practise. It’s in private beta on Windows. Join the waitlist and we’ll be in touch when the next group starts.</p>
       </div>
       <ol class="steps">
         {steps.map((s) => (

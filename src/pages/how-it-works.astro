@@ -25,9 +25,9 @@ const pipeline = [
     body: 'Deadlines and hearing dates are picked out and shown next to the passage they came from. Nothing reaches your calendar until you accept it.',
   },
   {
-    k: 'Map',
-    title: 'A relationship map builds itself',
-    body: 'For each client, Ture Aid draws a map of the people involved and the events that connect them. It grows as the case progresses, adding new parties and events as fresh material is filed.',
+    k: 'Chronology',
+    title: 'A case chronology builds itself',
+    body: 'Every document filed to the matter is logged and added to a visual chronology of the case, linking the parties involved to what happened and when. It grows as fresh material is filed.',
   },
   {
     k: 'Protect',
@@ -42,12 +42,12 @@ const pipeline = [
   {
     k: 'Review',
     title: 'Facts set against the elements',
-    body: 'Case review matches the facts of the matter to the conditions an offence requires, showing what the material supports and what is missing. It does not say which offence that is.',
+    body: 'You choose the offence. Case review sets the facts against its elements, showing what the material supports and what is missing.',
   },
   {
     k: 'You',
     title: 'You write and decide',
-    body: 'The submissions, the advice and every judgement call stay with you. Ture Aid prepares the ground and shows its sources.',
+    body: 'The submissions, the advice and every judgement call stay with you. Ture Aid prepares the relevant material and shows its sources.',
   },
 ];
 
@@ -55,18 +55,18 @@ const does = [
   'Files email and attachments into matters',
   'Reads scans, photos and PDFs locally',
   'Proposes dates and shows where each came from',
-  'Maps the people and events around each client as the case progresses',
+  'Keeps a visual chronology of each case as material is filed',
   'Gathers the relevant facts for the document you are drafting',
-  'Matches the facts of a case to the conditions of an offence',
+  'Matches the facts of a case to the legal elements',
   'Keeps a disclosure log per matter',
   'Searches across your matters',
 ];
-const doesnt = [
-  'Write submissions, advice or any legal text',
-  'Draft the document for you',
-  'Tell you which offence the facts amount to',
-  'Pass identifying details to the AI backend',
-  'Put dates in your calendar without you',
+const yours = [
+  'Submissions, advice and all legal writing',
+  'Drafting every document',
+  'Choosing the offence and reaching conclusions',
+  'Your clients’ identifying details, which stay on your computer',
+  'What goes in your calendar',
 ];
 
 const faqs = [
@@ -75,20 +75,24 @@ const faqs = [
     a: 'Your files are read, filed and searched on your own machine. When a feature uses the AI backend, names and other identifying details are replaced with placeholders first, and only that redacted version is sent.',
   },
   {
+    q: 'Which AI provider do you use?',
+    a: 'Ture Aid uses Claude, made by Anthropic, through Anthropic’s commercial API. Only redacted text is sent to it. Names and other identifying details are replaced with placeholders on your computer before anything leaves it.',
+  },
+  {
+    q: 'Is anything retained or used for training?',
+    a: 'Ture Aid does not keep the text it sends to the AI or the responses it gets back. Your matter data stays encrypted on your own computer. Under Anthropic’s commercial terms, data sent through its API is not used to train its models.',
+  },
+  {
     q: 'Will it write my submissions or advice?',
     a: 'No. Ture Aid never writes legal text. For drafting, it gathers the relevant facts for the document you name, each with its source, and the writing stays with you.',
   },
   {
     q: 'Will it tell me which offence the facts amount to?',
-    a: 'No. Case review sets the facts of a matter against the conditions an offence requires, so you can see what the material supports and what is missing. It does not name the offence or reach a conclusion.',
+    a: 'No. You choose the offence. Case review sets the facts against its elements, showing what the material supports and what is missing. It does not reach a conclusion.',
   },
   {
     q: 'How do I know where something came from?',
-    a: 'Every date, fact and connection on the relationship map links back to the passage it came from, so you can check it in a click.',
-  },
-  {
-    q: 'What do I need to run it?',
-    a: 'A Windows computer. To connect your mail, you need Microsoft 365 or the new Outlook. The beta also ships with an invented sample mailbox, so you can try it without real files.',
+    a: 'Every date, fact and connection in the case chronology links back to the passage it came from, so you can check it in a click.',
   },
   {
     q: 'How do I get access?',
@@ -96,7 +100,7 @@ const faqs = [
   },
 ];
 ---
-<Base overlay title="How it works" description="How Ture Aid files email, reads scans locally, proposes dates, maps people and events, gathers facts for drafting and reviews a case against the elements, and what it never does.">
+<Base overlay title="How it works" description="How Ture Aid files email, reads scans locally, proposes dates, builds a case chronology, gathers facts for drafting and reviews a case against the elements, and what it never does.">
   <PageHero image={url('/images/desk.webp')} eyebrow="Ture Aid explained">
     <h1>From inbox to organised matter, <em>without identifying details leaving your machine.</em></h1>
     <p class="lead">Ture Aid takes on the clerical work around a criminal defence brief. Here is what happens to a message from the moment it arrives.</p>
@@ -126,13 +130,14 @@ const faqs = [
         <ul class="ticks">{does.map((d) => <li>{d}</li>)}</ul>
       </div>
       <div class="card dark">
-        <h2 class="h3">Ture Aid does not</h2>
-        <ul class="crosses">{doesnt.map((d) => <li>{d}</li>)}</ul>
+        <h2 class="h3">What stays in your hands</h2>
+        <p class="sub">By design, Ture Aid leaves these to you.</p>
+        <ul class="marks">{yours.map((d) => <li>{d}</li>)}</ul>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="faq">
     <div class="wrap faq-grid">
       <div class="section-head">
         <p class="eyebrow">Questions</p>
@@ -181,13 +186,12 @@ const faqs = [
   .alt .card { border: 1px solid var(--line); }
   .two { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
   .card.dark { background: var(--ink); color: var(--white); box-shadow: none; }
-  ul.ticks, ul.crosses { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-  ul.ticks li, ul.crosses li { position: relative; padding-left: 34px; }
+  ul.ticks, ul.marks { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  ul.ticks li, ul.marks li { position: relative; padding-left: 34px; }
   ul.ticks li::before { content: ''; position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--aqua); }
   ul.ticks li::after { content: ''; position: absolute; left: 7px; top: 8px; width: 7px; height: 11px; border: solid var(--ink); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
-  ul.crosses li::before, ul.crosses li::after { content: ''; position: absolute; left: 3px; top: 13px; width: 16px; height: 2.5px; background: var(--pop); border-radius: 2px; }
-  ul.crosses li::before { transform: rotate(45deg); }
-  ul.crosses li::after { transform: rotate(-45deg); }
+  ul.marks li::before { content: ''; position: absolute; left: 4px; top: 7px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; opacity: 0.7; }
+  .card.dark .sub { margin-top: 6px; opacity: 0.75; }
 
   .faq-grid { display: grid; gap: clamp(32px, 6vw, 88px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); align-items: start; }
   .faq-grid .section-head { margin-bottom: 0; }
